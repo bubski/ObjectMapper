@@ -339,7 +339,7 @@ class RelationshipTransform<ObjectType>: TransformType where ObjectType: Mappabl
 	
 	func transformToJSON(_ value: Object?) -> JSON? {
 		return nil
-	}
+    }
 }
 
 #if os(Linux)
