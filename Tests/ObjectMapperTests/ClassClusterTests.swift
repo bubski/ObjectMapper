@@ -126,3 +126,15 @@ class Bus: Vehicle {
 		super.mapping(map: map)
 	}
 }
+
+#if os(Linux)
+
+    extension ClassClusterTests {
+        static var allTests = [
+            ("testClassClusters", testClassClusters),
+            ("testClassClustersFromJSONString", testClassClustersFromJSONString),
+            ("testClassClusterArray", testClassClusterArray),
+            ]
+    }
+    
+#endif

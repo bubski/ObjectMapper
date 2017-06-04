@@ -103,3 +103,19 @@ class MappableExtensionsTests: XCTestCase {
 		XCTAssertEqual(mapped, [testMappable])
 	}
 }
+
+#if os(Linux)
+
+    extension MappableExtensionsTests {
+        static var allTests = [
+            ("testInitFromString", testInitFromString),
+            ("testToJSONAndBack", testToJSONAndBack),
+            ("testArrayFromString", testArrayFromString),
+            ("testArrayToJSONAndBack", testArrayToJSONAndBack),
+            ("testSetInitFailsWithEmptyString", testSetInitFailsWithEmptyString),
+            ("testSetFromString", testSetFromString),
+            ("testSetToJSONAndBack", testSetToJSONAndBack),
+            ]
+    }
+    
+#endif

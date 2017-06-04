@@ -116,3 +116,14 @@ class Address: Mappable {
 		city <- map["city"]
 	}
 }
+
+#if os(Linux)
+
+    extension NullableKeysFromJSONTests {
+        static var allTests = [
+            ("testMapperNullifiesValues", testMapperNullifiesValues),
+            ("testMapperAbsentValues", testMapperAbsentValues),
+            ]
+    }
+    
+#endif

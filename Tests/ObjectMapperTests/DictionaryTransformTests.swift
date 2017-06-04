@@ -108,3 +108,12 @@ extension DictionaryTransformTestsObject {
 	}
 }
 
+#if os(Linux)
+
+    extension DictionaryTransformTests {
+        static var allTests = [
+            ("testDictionaryTransform", testDictionaryTransform),
+            ]
+    }
+    
+#endif

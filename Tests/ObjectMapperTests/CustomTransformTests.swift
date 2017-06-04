@@ -251,3 +251,21 @@ class Transforms: Mappable {
 	}
 }
 
+#if os(Linux)
+
+    extension CustomTransformTests {
+        static var allTests = [
+            ("testDateTransform", testDateTransform),
+            ("testISO8601DateTransform", testISO8601DateTransform),
+            ("testISO8601DateTransformWithInvalidInput", testISO8601DateTransformWithInvalidInput),
+            ("testCustomFormatDateTransform", testCustomFormatDateTransform),
+            ("testIntToStringTransformOf", testIntToStringTransformOf),
+            ("testInt64MaxValue", testInt64MaxValue),
+            ("testURLTranform", testURLTranform),
+            ("testEnumTransform", testEnumTransform),
+            ("testHexColorTransform", testHexColorTransform),
+            ]
+    }
+    
+
+#endif

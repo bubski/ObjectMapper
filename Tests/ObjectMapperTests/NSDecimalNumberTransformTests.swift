@@ -84,3 +84,13 @@ class NSDecimalNumberType: Mappable {
         decimalString <- (map["decimalString"], NSDecimalNumberTransform())
     }
 }
+
+#if os(Linux)
+
+    extension NSDecimalNumberTransformTests {
+        static var allTests = [
+            ("testNSDecimalNumberTransform", testNSDecimalNumberTransform),
+            ]
+    }
+
+#endif
