@@ -26,13 +26,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+#if !os(Linux)
+
 import Foundation
 import XCTest
 import ObjectMapper
 
 #if os(iOS) || os(tvOS) || os(watchOS)
 	typealias TestHexColor = UIColor
-#else
+#elseif os(macOS)
 	typealias TestHexColor = NSColor
 #endif
 
@@ -116,7 +118,7 @@ class CustomTransformTests: XCTestCase {
 	
 	func testInt64MaxValue() {
 		let transforms = Transforms()
-		transforms.int64Value = INT64_MAX
+		transforms.int64Value = Int64.max
 		
 		let JSON = mapper.toJSON(transforms)
 
@@ -267,5 +269,6 @@ class Transforms: Mappable {
             ]
     }
     
+#endif
 
 #endif

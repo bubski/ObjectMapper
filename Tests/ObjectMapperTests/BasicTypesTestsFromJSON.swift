@@ -321,9 +321,8 @@ class BasicTypesTestsFromJSON: XCTestCase {
 
 	func testMappingStringFromNSStringJSON(){
 		let value: String = "STRINGNGNGG"
-		let JSONNSString : NSString = "{\"string\" : \"\(value)\", \"stringOpt\" : \"\(value)\", \"stringImp\" : \"\(value)\"}" as NSString
-		
-		let mappedObject = mapper.map(JSONString: JSONNSString as String)
+        let JSONNSString = NSString(string: "{\"string\" : \"\(value)\", \"stringOpt\" : \"\(value)\", \"stringImp\" : \"\(value)\"}")
+		let mappedObject = mapper.map(JSONString: String(describing: JSONNSString))
 
 		XCTAssertNotNil(mappedObject)
 		XCTAssertEqual(mappedObject?.string, value)

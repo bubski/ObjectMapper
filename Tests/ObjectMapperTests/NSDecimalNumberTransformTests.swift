@@ -26,6 +26,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+#if !os(Linux)
+
 import XCTest
 import ObjectMapper
 
@@ -92,5 +94,7 @@ class NSDecimalNumberType: Mappable {
             ("testNSDecimalNumberTransform", testNSDecimalNumberTransform),
             ]
     }
+    
+#endif
 
 #endif
