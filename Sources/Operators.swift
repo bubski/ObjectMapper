@@ -69,6 +69,28 @@ public func <- <T>(left: inout T?, right: Map) {
 	}
 }
 
+public func <- (left: inout Float?, right: Map) {
+	switch right.mappingType {
+	case .fromJSON where right.isKeyPresent:
+		let a = right.value().flatMap(platformAgnosticCastToNSNumber)?.floatValue
+		FromJSON.optionalBasicType(&left, object: a)
+	case .toJSON:
+		left >>> right
+	default: ()
+	}
+}
+
+public func <- (left: inout Double?, right: Map) {
+	switch right.mappingType {
+	case .fromJSON where right.isKeyPresent:
+		let a = right.value().flatMap(platformAgnosticCastToNSNumber)?.doubleValue
+		FromJSON.optionalBasicType(&left, object: a)
+	case .toJSON:
+		left >>> right
+	default: ()
+	}
+}
+
 public func >>> <T>(left: T?, right: Map) {
 	if right.mappingType == .toJSON {
 		ToJSON.optionalBasicType(left, map: right)

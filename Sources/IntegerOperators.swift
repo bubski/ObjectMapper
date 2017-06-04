@@ -88,13 +88,37 @@ public func <- <T: UnsignedInteger>(left: inout T!, right: Map) {
 
 // MARK: - Casting Utils
 
+func platformAgnosticCastToNSNumber(_ value: Any) -> NSNumber? {
+
+	if let number = value as? NSNumber {
+		return  number
+	}
+
+	if let double = value as? Double {
+		return NSNumber(value: double)
+	}
+
+	if let float = value as? Float {
+		return NSNumber(value: float)
+	}
+
+	if let int = value as? Int {
+		return NSNumber(value: int)
+	}
+
+        if let int64 = value as? Int64 {
+                return NSNumber(value: int64)
+        }
+
+	return nil
+}
+
 /// Convert any value to `SignedInteger`.
 private func toSignedInteger<T: SignedInteger>(_ value: Any?) -> T? {
 	guard
 		let value = value,
-		case let number as NSNumber = value
-	else {
-		return nil
+		let number = platformAgnosticCastToNSNumber(value) else {
+			return nil
 	}
 
 	if T.self ==   Int.self, let x = Int(exactly: number.int64Value)?.toIntMax() {
@@ -120,9 +144,8 @@ private func toSignedInteger<T: SignedInteger>(_ value: Any?) -> T? {
 private func toUnsignedInteger<T: UnsignedInteger>(_ value: Any?) -> T? {
 	guard
 		let value = value,
-		case let number as NSNumber = value
-	else {
-		return nil
+		let number = platformAgnosticCastToNSNumber(value) else {
+			return nil
 	}
 
 	if T.self == UInt.self, let x = UInt(exactly: number.uint64Value)?.toUIntMax() {

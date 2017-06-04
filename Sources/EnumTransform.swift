@@ -38,6 +38,25 @@ open class EnumTransform<T: RawRepresentable>: TransformType {
 		if let raw = value as? T.RawValue {
 			return T(rawValue: raw)
 		}
+		guard let value = value else {
+			return nil
+		}
+		guard let nsnumber = platformAgnosticCastToNSNumber(value) else {
+			return nil
+		}
+		print("enum raw representable type:", type(of: T.RawValue.self))
+		switch T.RawValue.self {
+		case is Double.Type:
+			return T(rawValue: nsnumber.doubleValue as! T.RawValue)
+		case is Float.Type:
+			return T(rawValue: nsnumber.floatValue as! T.RawValue)
+                case is Int64.Type:
+print("CHLEB")
+                        return T(rawValue: nsnumber.int64Value as! T.RawValue)
+                case is NSNumber.Type:
+                        return T(rawValue: nsnumber as! T.RawValue)
+		default: print("default:"); break
+		}
 		return nil
 	}
 	
