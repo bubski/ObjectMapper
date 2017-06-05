@@ -26,8 +26,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#if !os(Linux)
-
 import Foundation
 import XCTest
 import ObjectMapper
@@ -151,7 +149,8 @@ class CustomTransformTests: XCTestCase {
 		XCTAssertEqual(transforms?.firstImageType, imageType.Cover)
 		XCTAssertEqual(transforms?.secondImageType, imageType.Thumbnail)
 	}
-	
+
+	#if os(iOS) || os(tvOS) || os(watchOS) || os(macOS)
 	func testHexColorTransform() {
 		let JSON: [String: Any] = [
 			"colorRed": "#FF0000",
@@ -180,6 +179,7 @@ class CustomTransformTests: XCTestCase {
 		XCTAssertEqual(JSONOutput["color4lenght"] as? String, "FF0000")
 		XCTAssertEqual(JSONOutput["color8lenght"] as? String, "FF0000FF") // alphaToJSON = true
 	}
+	#endif
 }
 
 class Transforms: Mappable {
@@ -208,13 +208,15 @@ class Transforms: Mappable {
 	
 	var firstImageType: ImageType?
 	var secondImageType: ImageType?
-	
+
+	#if os(iOS) || os(tvOS) || os(watchOS) || os(macOS)
 	var colorRed: TestHexColor?
 	var colorGreenLowercase: TestHexColor?
 	var colorBlueWithoutHash: TestHexColor?
 	var color3lenght: TestHexColor?
 	var color4lenght: TestHexColor?
 	var color8lenght: TestHexColor?
+	#endif
 
 	init(){
 		
@@ -243,13 +245,15 @@ class Transforms: Mappable {
 		
 		firstImageType		<- (map["firstImageType"], EnumTransform<ImageType>())
 		secondImageType		<- (map["secondImageType"], EnumTransform<ImageType>())
-		
-		colorRed			<- (map["colorRed"], HexColorTransform())
-		colorGreenLowercase <- (map["colorGreenLowercase"], HexColorTransform())
-		colorBlueWithoutHash <- (map["colorBlueWithoutHash"], HexColorTransform(prefixToJSON: true))
-		color3lenght			<- (map["color3lenght"], HexColorTransform())
-		color4lenght			<- (map["color4lenght"], HexColorTransform())
-		color8lenght			<- (map["color8lenght"], HexColorTransform(alphaToJSON: true))
+
+		#if os(iOS) || os(tvOS) || os(watchOS) || os(macOS)
+			colorRed			<- (map["colorRed"], HexColorTransform())
+			colorGreenLowercase <- (map["colorGreenLowercase"], HexColorTransform())
+			colorBlueWithoutHash <- (map["colorBlueWithoutHash"], HexColorTransform(prefixToJSON: true))
+			color3lenght			<- (map["color3lenght"], HexColorTransform())
+			color4lenght			<- (map["color4lenght"], HexColorTransform())
+			color8lenght			<- (map["color8lenght"], HexColorTransform(alphaToJSON: true))
+		#endif
 	}
 }
 
@@ -265,10 +269,7 @@ class Transforms: Mappable {
             ("testInt64MaxValue", testInt64MaxValue),
             ("testURLTranform", testURLTranform),
             ("testEnumTransform", testEnumTransform),
-            ("testHexColorTransform", testHexColorTransform),
             ]
     }
     
-#endif
-
 #endif
