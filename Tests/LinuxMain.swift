@@ -20,4 +20,5 @@ XCTMain([
 	testCase(PerformanceTests.allTests),
 	testCase(ToObjectTests.allTests),
 	testCase(URLTransformTests.allTests),
+	testCase(CastingTests.allTests),
 	])

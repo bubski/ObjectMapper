@@ -120,7 +120,11 @@ public final class Map {
 	}
 	
 	public func value<T>() -> T? {
-		return currentValue as? T
+		guard let currentValue = currentValue else {
+			return nil
+		}
+		let nsnumber: NSNumber? = platformConsistentCast(currentValue)
+		return platformConsistentCast(nsnumber ?? currentValue)
 	}
 	
 }
