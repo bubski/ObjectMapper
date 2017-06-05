@@ -26,8 +26,6 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#if !os(Linux)
-
 import XCTest
 import ObjectMapper
 
@@ -47,14 +45,14 @@ class NSDecimalNumberTransformTests: XCTestCase {
 
         let mappedObject = mapper.map(JSONString: JSONString)
 
-        XCTAssertNotNil(mappedObject)
-        XCTAssertEqual(mappedObject?.int, NSDecimalNumber(value: int))
-        XCTAssertEqual(mappedObject?.double, NSDecimalNumber(value: double))
-        XCTAssertEqual(mappedObject?.decimal, NSDecimalNumber(decimal: decimal))
-        XCTAssertEqual(mappedObject?.intString, NSDecimalNumber(string: intString))
-        XCTAssertEqual(mappedObject?.doubleString, NSDecimalNumber(string: doubleString))
-        XCTAssertEqual(mappedObject?.decimalString, NSDecimalNumber(string: decimalString))
-        XCTAssertEqual(mappedObject?.int?.stringValue, intString)
+		XCTAssertNotNil(mappedObject)
+		XCTAssertEqual(mappedObject?.int, NSDecimalNumber(decimal: Decimal(int)))
+		XCTAssertEqual(mappedObject?.double, NSDecimalNumber(decimal: Decimal(double)))
+		XCTAssertEqual(mappedObject?.decimal, NSDecimalNumber(decimal: decimal))
+		XCTAssertEqual(mappedObject?.intString, NSDecimalNumber(string: intString))
+		XCTAssertEqual(mappedObject?.doubleString, NSDecimalNumber(string: doubleString))
+		XCTAssertEqual(mappedObject?.decimalString, NSDecimalNumber(string: decimalString))
+		XCTAssertEqual(mappedObject?.int?.stringValue, intString)
         XCTAssertEqual(mappedObject?.double?.stringValue, doubleString)
         XCTAssertEqual(mappedObject?.decimal?.stringValue, decimalString)
     }
@@ -95,6 +93,4 @@ class NSDecimalNumberType: Mappable {
             ]
     }
     
-#endif
-
 #endif
