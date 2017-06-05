@@ -3,7 +3,7 @@ import XCTest
 
 XCTMain([
 	testCase(ClassClusterTests.allTests),
-//	testCase(CustomTransformTests.allTests),
+	testCase(CustomTransformTests.allTests),
 	testCase(DataTransformTests.allTests),
 	testCase(DictionaryTransformTests.allTests),
 	testCase(GenericObjectsTests.allTests),
