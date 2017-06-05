@@ -8,7 +8,7 @@ XCTMain([
 	testCase(DictionaryTransformTests.allTests),
 	testCase(GenericObjectsTests.allTests),
 	testCase(IgnoreNilTests.allTests),
-//	testCase(ImmutableObjectTests.allTests), // fix file name
+	testCase(ImmutableObjectTests.allTests),
 	testCase(MapContextTests.allTests),
 	testCase(MappableExtensionsTests.allTests),
 	testCase(MappableTypesWithTransformsTests.allTests),
