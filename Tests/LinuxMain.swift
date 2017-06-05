@@ -12,7 +12,7 @@ XCTMain([
 	testCase(MapContextTests.allTests),
 	testCase(MappableExtensionsTests.allTests),
 	testCase(MappableTypesWithTransformsTests.allTests),
-//	testCase(NSDecimalNumberTransformTests.allTests),
+	testCase(NSDecimalNumberTransformTests.allTests),
 	testCase(NestedArrayTests.allTests),
 	testCase(NestedKeysTests.allTests),
 	testCase(NullableKeysFromJSONTests.allTests),
