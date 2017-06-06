@@ -107,10 +107,10 @@ func platformConsistentCast<T>(_ object: Any) -> T? {
 	#if os(Linux)
 
 		if T.self is NSNumber.Type {
-			return platformConsistentCastToNSNumber(value) as? T
+			return platformConsistentCastToNSNumber(object) as? T
 		}
 
-		if let nsnumber = value as? NSNumber {
+		if let nsnumber = object as? NSNumber {
 			switch T.self {
 			case is Int8.Type: return nsnumber.int8Value as? T
 			case is UInt8.Type: return nsnumber.uint8Value as? T
@@ -134,64 +134,64 @@ func platformConsistentCast<T>(_ object: Any) -> T? {
 	return nil
 }
 
-private func platformConsistentCastToNSNumber(_ value: Any) -> NSNumber? {
-	if let casted = value as? NSNumber {
+private func platformConsistentCastToNSNumber(_ object: Any) -> NSNumber? {
+	if let casted = object as? NSNumber {
 		return casted
 	}
 
-	if let casted = value as? Int8 {
+	if let casted = object as? Int8 {
 		return NSNumber(value: casted)
 	}
 
-	if let casted = value as? UInt8 {
+	if let casted = object as? UInt8 {
 		return NSNumber(value: casted)
 	}
 
-	if let casted = value as? Int16 {
+	if let casted = object as? Int16 {
 		return NSNumber(value: casted)
 	}
 
-	if let casted = value as? UInt16 {
+	if let casted = object as? UInt16 {
 		return NSNumber(value: casted)
 	}
 
-	if let casted = value as? Int32 {
+	if let casted = object as? Int32 {
 		return NSNumber(value: casted)
 	}
 
-	if let casted = value as? UInt32 {
+	if let casted = object as? UInt32 {
 		return NSNumber(value: casted)
 	}
 
-	if let casted = value as? Int64 {
+	if let casted = object as? Int64 {
 		return NSNumber(value: casted)
 	}
 
-	if let casted = value as? UInt64 {
+	if let casted = object as? UInt64 {
 		return NSNumber(value: casted)
 	}
 
-	if let casted = value as? Float {
+	if let casted = object as? Float {
 		return NSNumber(value: casted)
 	}
 
-	if let casted = value as? Double {
+	if let casted = object as? Double {
 		return NSNumber(value: casted)
 	}
 
-	if let casted = value as? Bool {
+	if let casted = object as? Bool {
 		return NSNumber(value: casted)
 	}
 
-	if let casted = value as? Int {
+	if let casted = object as? Int {
 		return NSNumber(value: casted)
 	}
 
-	if let casted = value as? UInt {
+	if let casted = object as? UInt {
 		return NSNumber(value: casted)
 	}
 
-	if let casted = value as? Decimal {
+	if let casted = object as? Decimal {
 		return NSDecimalNumber(decimal: casted)
 	}
 	
