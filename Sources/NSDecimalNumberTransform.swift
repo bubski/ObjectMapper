@@ -34,12 +34,16 @@ open class NSDecimalNumberTransform: TransformType {
 
     public init() {}
 
-    open func transformFromJSON(_ value: Any?) -> NSDecimalNumber? {
-		guard let value = value else {
-			return nil
+	open func transformFromJSON(_ value: Any?) -> NSDecimalNumber? {
+		if let string = value as? String {
+			return NSDecimalNumber(string: string)
+		} else if let number = value as? NSNumber {
+			return NSDecimalNumber(decimal: number.decimalValue)
+		} else if let double = value as? Double {
+			return NSDecimalNumber(floatLiteral: double)
 		}
-		return NSDecimalNumber(string: String(describing: value))
-    }
+		return nil
+	}
 
     open func transformToJSON(_ value: NSDecimalNumber?) -> String? {
         guard let value = value else { return nil }
