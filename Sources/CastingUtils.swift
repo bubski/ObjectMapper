@@ -29,17 +29,85 @@
 
 import Foundation
 
-// MARK: - Casting Utils
+/**
+There are discrepancies in how standard casting behaves for numeric types on Apple OSes and Linux.
+E.g. casting an `Int8` to `NSNumber` will succeed on macOS, but will not on Linux.
 
-func platformConsistentCast<T>(_ value: Any) -> T? {
-	if let casted = value as? T {
+This function is intended to provide a consistent behaviour for all platforms (maintain the one from Apple OSes).
+
+## Usage:
+Normally you would cast an object using:
+```
+if let casted = object as? NewType {
+  …
+}
+```
+with this function, you would instead write:
+```
+if let casted: NewType = platformConsistentCast(object) {
+…
+}
+```
+
+- Note:
+Below is a chart depicting which casting works on:
+*  - Apple OSes
+* L - Linux
+
+```
+y-axis: Type casting from
+x-axis: Type casting to
+```
+
+```
+.--------.----.-----.-----.------.-----.------.-----.------.-----.------.----.---.----.-------.--------.
+|        |Int8|UInt8|Int16|UInt16|Int32|UInt32|Int64|UInt64|Float|Double|Bool|Int|UInt|Decimal|NSNumber|
+:--------+----+-----+-----+------+-----+------+-----+------+-----+------+----+---+----+-------+--------:
+|Int8    |L  |     |     |      |     |      |     |      |     |      |    |   |    |       |       |
+:--------+----+-----+-----+------+-----+------+-----+------+-----+------+----+---+----+-------+--------:
+|UInt8   |    |L   |     |      |     |      |     |      |     |      |    |   |    |       |       |
+:--------+----+-----+-----+------+-----+------+-----+------+-----+------+----+---+----+-------+--------:
+|Int16   |    |     |L   |      |     |      |     |      |     |      |    |   |    |       |       |
+:--------+----+-----+-----+------+-----+------+-----+------+-----+------+----+---+----+-------+--------:
+|UInt16  |    |     |     |L    |     |      |     |      |     |      |    |   |    |       |       |
+:--------+----+-----+-----+------+-----+------+-----+------+-----+------+----+---+----+-------+--------:
+|Int32   |    |     |     |      |L   |      |     |      |     |      |    |   |    |       |       |
+:--------+----+-----+-----+------+-----+------+-----+------+-----+------+----+---+----+-------+--------:
+|UInt32  |    |     |     |      |     |L    |     |      |     |      |    |   |    |       |       |
+:--------+----+-----+-----+------+-----+------+-----+------+-----+------+----+---+----+-------+--------:
+|Int64   |    |     |     |      |     |      |L   |      |     |      |    |   |    |       |       |
+:--------+----+-----+-----+------+-----+------+-----+------+-----+------+----+---+----+-------+--------:
+|UInt64  |    |     |     |      |     |      |     |L    |     |      |    |   |    |       |       |
+:--------+----+-----+-----+------+-----+------+-----+------+-----+------+----+---+----+-------+--------:
+|Float   |    |     |     |      |     |      |     |      |L   |      |    |   |    |       |       |
+:--------+----+-----+-----+------+-----+------+-----+------+-----+------+----+---+----+-------+--------:
+|Double  |    |     |     |      |     |      |     |      |     |L    |    |   |    |       |       |
+:--------+----+-----+-----+------+-----+------+-----+------+-----+------+----+---+----+-------+--------:
+|Bool    |    |     |     |      |     |      |     |      |     |      |L  |   |    |       |       |
+:--------+----+-----+-----+------+-----+------+-----+------+-----+------+----+---+----+-------+--------:
+|Int     |    |     |     |      |     |      |     |      |     |      |    |L |    |       |       |
+:--------+----+-----+-----+------+-----+------+-----+------+-----+------+----+---+----+-------+--------:
+|UInt    |    |     |     |      |     |      |     |      |     |      |    |   |L  |       |       |
+:--------+----+-----+-----+------+-----+------+-----+------+-----+------+----+---+----+-------+--------:
+|Decimal |    |     |     |      |     |      |     |      |     |      |    |   |    |L     |       |
+:--------+----+-----+-----+------+-----+------+-----+------+-----+------+----+---+----+-------+--------:
+|NSNumber|   |    |    |     |    |     |    |     |    |     |   |  |   |       |L      |
+:--------+----+-----+-----+------+-----+------+-----+------+-----+------+----+---+----+-------+--------:
+```
+
+- Returns: Casted representation of passed object, or `nil` if casting failed.
+
+- Parameter object: Object to cast.
+*/
+func platformConsistentCast<T>(_ object: Any) -> T? {
+	if let casted = object as? T {
 		return casted
 	}
 
 	#if os(Linux)
 
 		if T.self is NSNumber.Type {
-			return platformAgnosticCastToNSNumber(value) as? T
+			return platformConsistentCastToNSNumber(value) as? T
 		}
 
 		if let nsnumber = value as? NSNumber {
@@ -66,7 +134,7 @@ func platformConsistentCast<T>(_ value: Any) -> T? {
 	return nil
 }
 
-private func platformAgnosticCastToNSNumber(_ value: Any) -> NSNumber? {
+private func platformConsistentCastToNSNumber(_ value: Any) -> NSNumber? {
 	if let casted = value as? NSNumber {
 		return casted
 	}
