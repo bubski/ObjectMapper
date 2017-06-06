@@ -123,7 +123,21 @@ public final class Map {
 		guard let currentValue = currentValue else {
 			return nil
 		}
+
+		/*
+		Depending on the platform the code is running on, JSON data is serialized to different data types.
+		E.g. on Apple OSes, numbers are represented by NSNumbers, and on Linux, by Swift native types like Double.
+		
+		This leads to a major difference between platforms.
+		Casting NSNumber to Float is possible, but casting Double to Float is not.
+
+		So, to keep logic consistent, we preventively promote currentValue to NSNumber, which can then be casted to
+		Float.
+		
+		If currentValue is not a numeric type, casting to NSNumber will fail and we'll cast currentValue normally.
+		*/
 		let nsnumber: NSNumber? = platformConsistentCast(currentValue)
+
 		return platformConsistentCast(nsnumber ?? currentValue)
 	}
 	
